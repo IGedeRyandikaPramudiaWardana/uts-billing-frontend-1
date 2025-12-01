@@ -1,4 +1,4 @@
-// src/utils/apiClient.js (Pastikan seperti ini)
+// src/utils/apiClient.js
 
 import axios from "axios";
 
@@ -6,7 +6,12 @@ import axios from "axios";
 const token = localStorage.getItem("authToken");
 
 const apiClient = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  // --- PERBAIKAN UTAMA DI SINI ---
+  // Kita gunakan logika "OR" (||).
+  // 1. Cek apakah ada VITE_API_URL (dari Vercel)?
+  // 2. Jika tidak ada (null/undefined), gunakan localhost (untuk di laptop).
+  baseURL: import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api",
+  
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
